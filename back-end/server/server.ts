@@ -51,6 +51,55 @@
 //   console.log("Server running on port 5000");
 
 // server.ts
+// import express from 'express';
+// import mongoose from 'mongoose';
+// import dotenv from 'dotenv';
+// import cors from "cors";
+
+// import addressRoutes from './addressRoutes';
+// import brandRoutes from './smartPhoneBrandRoutes';
+// import laptopbrandRoutes from "./LaptopBrandRoutes";
+// import bookingRoutes from './bookingRoutes';
+// import accessoriesRoutes from './accessoriesBrandRoutes';
+// import televisionRoutes from './televisionBrandRoutes';
+// import refrigeratorRoutes from './refrigeratorBrandRoutes';
+
+// dotenv.config();
+
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
+
+// const MONGO_URI = "mongodb+srv://ewaste341:Ragu0423@cluster0.hqzylxk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// if (!MONGO_URI) {
+//   throw new Error("MONGO_URI is not defined in the environment variables.");
+// }
+
+// // ⛔ DO NOT CALL listen() – Vercel manages this for you
+// mongoose.connect(MONGO_URI)
+//   .then(() => console.log("MongoDB connected"))
+//   .catch(err => console.error("MongoDB connection error:", err));
+
+// // Add your routes
+// app.use('/', addressRoutes);
+// app.use('/', brandRoutes);
+// app.use('/', laptopbrandRoutes);
+// app.use('/', accessoriesRoutes);
+// app.use('/', televisionRoutes);
+// app.use('/', refrigeratorRoutes);
+// app.use('/', bookingRoutes);
+
+// // ✅ EXPORT for Vercel serverless
+// export default app;
+
+// // });
+
+// // // app.listen(PORT, () => {
+// // //   console.log(`Server running on port ${PORT}`);
+// // // });
+
+
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -64,24 +113,23 @@ import accessoriesRoutes from './accessoriesBrandRoutes';
 import televisionRoutes from './televisionBrandRoutes';
 import refrigeratorRoutes from './refrigeratorBrandRoutes';
 
-dotenv.config();
+dotenv.config(); // Allows loading .env in local dev
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-const MONGO_URI = "mongodb+srv://ewaste341:Ragu0423@cluster0.hqzylxk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// ✅ Use MONGO_URI from Vercel Environment Variable
+const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
   throw new Error("MONGO_URI is not defined in the environment variables.");
 }
 
-// ⛔ DO NOT CALL listen() – Vercel manages this for you
 mongoose.connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-// Add your routes
 app.use('/', addressRoutes);
 app.use('/', brandRoutes);
 app.use('/', laptopbrandRoutes);
@@ -90,11 +138,5 @@ app.use('/', televisionRoutes);
 app.use('/', refrigeratorRoutes);
 app.use('/', bookingRoutes);
 
-// ✅ EXPORT for Vercel serverless
+// ✅ Do not use app.listen — required for Vercel
 export default app;
-
-// });
-
-// // app.listen(PORT, () => {
-// //   console.log(`Server running on port ${PORT}`);
-// // });
